@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ManagerDTO {
-    private int id;
-    private String nom;
-    private String prenom;
-    private String email;
+public class ChoixUEOptionsDTO {
+    private Long etudiantId;
+    private List<Long> ueOptionnelles;
 }

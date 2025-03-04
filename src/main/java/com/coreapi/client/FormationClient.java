@@ -1,7 +1,6 @@
 package com.coreapi.client;
 
-import com.coreapi.dto.FormationDTO;
-import com.coreapi.dto.InscriptionFormationDTO;
+import com.coreapi.dto.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,4 +26,25 @@ public interface FormationClient {
 
     @PostMapping("/{id}/inscriptions")
     void inscrireEtudiant(@PathVariable String id, @RequestBody InscriptionFormationDTO inscription);
+
+
+    // ✅ Valider ou refuser une inscription
+    @PutMapping("/{id}/validation/{etudiantId}")
+    void validerInscription(@PathVariable String id, @PathVariable String etudiantId, @RequestBody ValidationInscriptionDTO validation);
+
+    // ✅ Récupérer la liste des UE d’une formation
+    @GetMapping("/{id}/ue")
+    List<UeDTO> getUEs(@PathVariable String id);
+
+    // ✅ Choisir les UE optionnelles
+    @PostMapping("/{id}/ue/options")
+    void choisirUEOptions(@PathVariable String id, @RequestBody ChoixUEOptionsDTO choix);
+
+    // ✅ Récupérer les groupes de TD et TP
+    @GetMapping("/{id}/groupes")
+    List<GroupeDTO> getGroupes(@PathVariable String id);
+
+    // ✅ Assigner automatiquement les étudiants aux groupes
+    @PutMapping("/{id}/groupes/assignation")
+    void assignerGroupes(@PathVariable String id);
 }

@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ManagerDTO {
-    private int id;
-    private String nom;
-    private String prenom;
-    private String email;
+public class ValidationInscriptionDTO {
+    private boolean valide;
+    private String commentaire;
 }

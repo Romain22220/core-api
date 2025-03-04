@@ -1,8 +1,7 @@
 package com.coreapi.controller;
 
 import com.coreapi.client.FormationClient;
-import com.coreapi.dto.FormationDTO;
-import com.coreapi.dto.InscriptionFormationDTO;
+import com.coreapi.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,5 +45,38 @@ public class FormationController {
     public ResponseEntity<Void> inscrireEtudiant(@PathVariable String id, @RequestBody InscriptionFormationDTO inscription) {
         formationClient.inscrireEtudiant(id, inscription);
         return ResponseEntity.status(201).build();
+    }
+
+    // ✅ Valider ou refuser une inscription
+    @PutMapping("/{id}/validation/{etudiantId}")
+    public ResponseEntity<Void> validerInscription(@PathVariable String id, @PathVariable String etudiantId, @RequestBody ValidationInscriptionDTO validation) {
+        formationClient.validerInscription(id, etudiantId, validation);
+        return ResponseEntity.ok().build();
+    }
+
+    // ✅ Récupérer la liste des UE d’une formation
+    @GetMapping("/{id}/ue")
+    public ResponseEntity<List<UeDTO>> getUEs(@PathVariable String id) {
+        return ResponseEntity.ok(formationClient.getUEs(id));
+    }
+
+    // ✅ Choisir les UE optionnelles
+    @PostMapping("/{id}/ue/options")
+    public ResponseEntity<Void> choisirUEOptions(@PathVariable String id, @RequestBody ChoixUEOptionsDTO choix) {
+        formationClient.choisirUEOptions(id, choix);
+        return ResponseEntity.ok().build();
+    }
+
+    // ✅ Récupérer les groupes de TD et TP
+    @GetMapping("/{id}/groupes")
+    public ResponseEntity<List<GroupeDTO>> getGroupes(@PathVariable String id) {
+        return ResponseEntity.ok(formationClient.getGroupes(id));
+    }
+
+    // ✅ Assigner automatiquement les étudiants aux groupes
+    @PutMapping("/{id}/groupes/assignation")
+    public ResponseEntity<Void> assignerGroupes(@PathVariable String id) {
+        formationClient.assignerGroupes(id);
+        return ResponseEntity.ok().build();
     }
 }

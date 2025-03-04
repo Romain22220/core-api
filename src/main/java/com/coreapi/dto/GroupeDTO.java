@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ManagerDTO {
-    private int id;
+public class GroupeDTO {
+    private Long id;
     private String nom;
-    private String prenom;
-    private String email;
+    private int capaciteMax;
+    private List<Long> etudiantsIds;  // Liste des étudiants assignés à ce groupe
 }
