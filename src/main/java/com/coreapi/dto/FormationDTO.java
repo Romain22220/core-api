@@ -1,8 +1,18 @@
 package com.coreapi.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class FormationDTO {
-    private String nomFormation;
-    private int nbUe;
-    private int tailleMaxTD;
-    private int tailleMaxTP;
+
+    private Long id;
+    private String nom;
+    private int tailleTD;
+    private int tailleTP;
+    private int nbUeOptionnelles;
+
 }

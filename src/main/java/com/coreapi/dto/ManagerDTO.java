@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ManagerDTO {
-    private String nom;
-    private String mail;
+    private int id;
+    private String name;
+    private String email;
 }

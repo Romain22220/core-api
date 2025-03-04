@@ -13,9 +13,9 @@ public class StudentDTO {
     private int id;
     private String nom;
     private String prenom;
-    private Date dateNaissance;
-    private int numeroCandidat;
-    private String mail;
+    private Date date_naissance;
+    private int numero;
+    private String adresse_mail;
 
 
 }

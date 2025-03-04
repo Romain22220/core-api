@@ -1,7 +1,7 @@
 package com.coreapi.controller;
 
-import com.coreapi.client.*;
-import com.coreapi.dto.*;
+import com.coreapi.client.ScrapingClient;
+import com.coreapi.dto.ScrapedFormationDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,21 +9,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/core")
+@RequestMapping("/scraping")
 @RequiredArgsConstructor
-public class CoreController {
+public class ScrappingController {
 
     private final ScrapingClient scrapingClient;
 
-    @GetMapping("/test")
-    public String testEndpoint() {
-        return "API is running!";
-    }
-
     // 📌 Scraper les formations pour une année donnée
-    @GetMapping("/scrapper")
+    @GetMapping
     public ResponseEntity<List<ScrapedFormationDTO>> scrapeFormations(@RequestParam("year") String year) {
         return ResponseEntity.ok(scrapingClient.scrapeFormations(year));
     }
-
 }

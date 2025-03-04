@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UeDTO {
-    private String name;
-    private int capacity;
-    private boolean isMandatory;
+public class RegisterRequestDTO {
+    private String username;
+    private String password;
+    private Long student;
 }
