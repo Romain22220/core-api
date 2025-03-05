@@ -1,0 +1,579 @@
+openapi: 3.1.0
+info:
+  title: core-api
+  description: API centrale qui route les requêtes vers les autres APIs.
+  version: 1.0.0
+
+servers:
+  - url: https://localhost:8090/
+    description: Serveur de production
+
+paths:
+  /students:
+    get:
+      summary: Liste tous les étudiants
+      description: Renvoie une liste de tous les étudiants enregistrés.
+      responses:
+        '200':
+          description: Une liste d'étudiants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+    post:
+      summary: Ajoute un nouvel étudiant
+      description: Crée un nouvel étudiant dans la base de données.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+      responses:
+        '200':
+          description: Étudiant créé avec succès
+        '400':
+          description: Requête invalide
+
+  /students/{id}:
+    get:
+      summary: Trouver un étudiant par son ID
+      description: Renvoie un étudiant spécifique identifié par son ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: L'ID de l'étudiant à trouver.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Détails d'un étudiant
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '404':
+          description: Étudiant non trouvé
+    put:
+      summary: Met à jour un étudiant
+      description: Met à jour les informations d'un étudiant spécifique.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: L'ID de l'étudiant à mettre à jour.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+      responses:
+        '200':
+          description: Étudiant mis à jour avec succès
+        '400':
+          description: Requête invalide
+        '404':
+          description: Étudiant non trouvé
+    delete:
+      summary: Supprime un étudiant
+      description: Supprime un étudiant spécifique de la base de données.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: L'ID de l'étudiant à supprimer.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Étudiant supprimé avec succès
+        '404':
+          description: Étudiant non trouvé
+  /scraping:
+    get:
+      summary: Scraper les formations pour une année donnée
+      description: Récupère les formations disponibles pour une année spécifique.
+      parameters:
+        - name: year
+          in: query
+          required: true
+          description: L'année pour laquelle récupérer les formations.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Liste des formations scrappées
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Scraping'
+  /managers:
+    get:
+      summary: Liste tous les managers
+      description: Renvoie une liste de tous les managers enregistrés.
+      responses:
+        '200':
+          description: Une liste de managers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Manager'
+    put:
+      summary: Met à jour un manager
+      description: Met à jour les informations d'un manager spécifique.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: L'ID du manager à mettre à jour.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Manager'
+      responses:
+        '200':
+          description: Manager mis à jour avec succès
+        '400':
+          description: Requête invalide
+        '404':
+          description: Manager non trouvé
+    delete:
+      summary: Supprime un manager
+      description: Supprime un manager spécifique de la base de données.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: L'ID du manager à supprimer.
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Manager supprimé avec succès
+        '404':
+          description: Manager non trouvé
+
+  /formations:
+    get:
+      summary: Liste toutes les formations
+      description: Renvoie une liste de toutes les formations disponibles.
+      responses:
+        '200':
+          description: Une liste de formations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Formation'
+    post:
+      summary: Ajoute une nouvelle formation
+      description: Crée une nouvelle formation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Formation'
+      responses:
+        '200':
+          description: Formation créée avec succès
+        '400':
+          description: Requête invalide
+
+  /formations/{id}:
+    get:
+      summary: Trouver une formation par son ID
+      description: Renvoie une formation spécifique identifiée par son ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: L'ID de la formation.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Détails d'une formation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Formation'
+        '404':
+          description: Formation non trouvée
+    delete:
+      summary: Supprime une formation
+      description: Supprime une formation spécifique.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: L'ID de la formation.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Formation supprimée avec succès
+        '404':
+          description: Formation non trouvée
+  /register:
+    post:
+      summary: Inscription d'un utilisateur
+      description: Permet à un nouvel utilisateur de s'inscrire.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+      responses:
+        '201':
+          description: Utilisateur créé avec succès
+        '400':
+          description: Requête invalide (email déjà utilisé, données invalides)
+
+  /login:
+    post:
+      summary: Connexion d'un utilisateur
+      description: Permet à un utilisateur de se connecter et d'obtenir un token JWT.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+      responses:
+        '200':
+          description: Connexion réussie, retourne un token JWT
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: Token JWT à utiliser pour l'authentification
+                  refresh_token:
+                    type: string
+                    description: Token JWT permettant d'obtenir un nouveau token d'accès
+        '401':
+          description: Identifiants incorrects
+
+  /logout:
+    post:
+      summary: Déconnexion de l'utilisateur
+      description: Invalide le token de l'utilisateur et le déconnecte.
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: Déconnexion réussie
+        '401':
+          description: Non authentifié
+
+  /token:
+    post:
+      summary: Rafraîchir le token JWT
+      description: Génère un nouveau token d'accès à partir d'un refresh token valide.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refresh_token:
+                  type: string
+                  description: Refresh token valide
+      responses:
+        '200':
+          description: Nouveau token généré
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: Nouveau token JWT d'accès
+        '401':
+          description: Refresh token invalide ou expiré
+
+  /users/{id}:
+    get:
+      summary: Récupérer les informations de l'utilisateur connecté
+      description: Renvoie les informations du profil de l'utilisateur authentifié.
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: Informations de l'utilisateur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Non authentifié
+
+  /account/{id}:
+    put:
+      summary: Met à jour un compte utilisateur
+      description: Modifie les informations d'un utilisateur.
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identifiant unique de l'utilisateur.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+      responses:
+        '200':
+          description: Compte mis à jour avec succès
+        '400':
+          description: Données invalides
+        '401':
+          description: Non authentifié
+        '404':
+          description: Utilisateur non trouvé
+
+    delete:
+      summary: Supprime un compte utilisateur
+      description: Supprime définitivement un compte utilisateur.
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identifiant unique de l'utilisateur.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Compte supprimé avec succès
+        '401':
+          description: Non authentifié
+        '404':
+          description: Utilisateur non trouvé
+
+
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "Utilisez le token JWT pour authentifier les requêtes"
+  schemas:
+    Student:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          description: L'ID de l'étudiant.
+        nom:
+          type: string
+          description: Le nom de l'étudiant.
+        prenom:
+          type: string
+          description: Le prénom de l'étudiant.
+        adresse_mail:
+          type: string
+          format: email
+          description: L'adresse e-mail de l'étudiant.
+        date_naissance:
+          type: Date
+          format: date
+          description: La date de naissance de l'étudiant.
+        numero:
+          type: integer
+          description: Le numéro de téléphone de l'étudiant.
+
+    Scraping:
+      type: object
+      required:
+        - titre
+        - annee
+      properties:
+        titre:
+          type: string
+          description: Le titre de la formation.
+        annee:
+          type: string
+          description: L'année de la formation.
+        description:
+          type: string
+          description: Une description de la formation.
+        url:
+          type: string
+          format: uri
+          description: L'URL de la formation.
+
+    Manager:
+      type: object
+      required:
+        - id
+        - nom
+      properties:
+        id:
+          type: integer
+          description: L'ID du manager.
+        nom:
+          type: string
+          description: Le nom du manager.
+        prenom:
+          type: string
+          description: Le prénom du manager.
+        email:
+          type: string
+          format: email
+          description: L'adresse e-mail du manager.
+
+    Formation:
+      type: object
+      properties:
+        id:
+          type: string
+        nom:
+          type: string
+        tailleTD:
+          type: integer
+        tailleTP:
+          type: integer
+        nbUeOptionnelles:
+          type: integer
+
+    RequeteFormation:
+      type: object
+      properties:
+        nom:
+          type: string
+        tailleTD:
+          type: integer
+        tailleTP:
+          type: integer
+        nbUeOptionnelles:
+          type: integer
+
+    RequeteInscriptionFormation:
+      type: object
+      properties:
+        etudiantId:
+          type: string
+
+    UE:
+      type: object
+      properties:
+        id:
+          type: string
+        nom:
+          type: string
+        estObligatoire:
+          type: boolean
+        capacite:
+          type: integer
+
+    Groupe:
+      type: object
+      properties:
+        id:
+          type: string
+        nom:
+          type: string
+        type:
+          type: string
+
+    UserRegister:
+      type: object
+      required:
+        - email
+        - password
+        - username
+      properties:
+        email:
+          type: string
+          format: email
+          description: Adresse email unique de l'utilisateur.
+        password:
+          type: string
+          format: password
+          description: Mot de passe de l'utilisateur (doit être sécurisé).
+        username:
+          type: string
+          description: Nom d'utilisateur.
+
+    UserLogin:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          description: Adresse email de l'utilisateur.
+        password:
+          type: string
+          format: password
+          description: Mot de passe de l'utilisateur.
+
+    UserUpdate:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Nouvelle adresse email.
+        username:
+          type: string
+          description: Nouveau nom d'utilisateur.
+        password:
+          type: string
+          format: password
+          description: Nouveau mot de passe.
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifiant unique de l'utilisateur.
+        email:
+          type: string
+          format: email
+        username:
+          type: string
+          description: Nom d'utilisateur.
+        created_at:
+          type: string
+          format: date-time
+          description: Date de création du compte.
+
+security:
+  - bearerAuth: [ ]

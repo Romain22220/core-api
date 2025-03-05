@@ -3,6 +3,7 @@ package com.coreapi.client;
 
 import com.coreapi.dto.StudentDTO;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,16 +14,18 @@ public interface StudentClient {
     @GetMapping("/students")  // Ajoute ce endpoint
     List<StudentDTO> getAllStudents();
 
-    @GetMapping("/student/{id}")
+    @GetMapping("/students/{id}")
     StudentDTO getStudent(@PathVariable("id") String id);
 
-    @PostMapping("/student")
+    @PostMapping("/students")
     StudentDTO createStudent(StudentDTO studentDTO);
 
-    @PutMapping("/student/{id}")
+    @PutMapping(path = "/students/{id}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     StudentDTO updateStudent(@PathVariable("id") String id, StudentDTO studentDTO);
 
-    @DeleteMapping("/student/{id}")
+    @DeleteMapping("/students/{id}")
     void deleteStudent(@PathVariable("id") String id);
 
 }

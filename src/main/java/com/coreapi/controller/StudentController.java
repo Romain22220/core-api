@@ -3,6 +3,7 @@ package com.coreapi.controller;
 import com.coreapi.client.StudentClient;
 import com.coreapi.dto.StudentDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,9 @@ public class StudentController {
         return ResponseEntity.ok(studentClient.createStudent(studentDTO));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(path = "/students/{id}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<StudentDTO> updateStudent(@PathVariable String id, @RequestBody StudentDTO studentDTO) {
         return ResponseEntity.ok(studentClient.updateStudent(id, studentDTO));
     }

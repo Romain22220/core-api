@@ -13,7 +13,7 @@ public class StudentDTO {
     private int id;
     private String nom;
     private String prenom;
-    private Date date_naissance;
+    private String date_naissance;
     private int numero;
     private String adresse_mail;
 
