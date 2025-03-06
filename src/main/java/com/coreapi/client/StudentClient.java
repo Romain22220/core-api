@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "apiStudent", url = "http://localhost:8080", fallback = StudentFallback.class)
+@FeignClient(name = "apiStudent", url = "http://localhost:8300", fallback = StudentFallback.class)
 public interface StudentClient {
 
     @GetMapping("/students")  // Ajoute ce endpoint
