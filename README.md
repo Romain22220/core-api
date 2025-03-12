@@ -17,8 +17,11 @@ La Core API est une API centrale qui route les requêtes vers les autres APIs. E
 ### Managers
 
 - **GET /managers** : Liste tous les managers enregistrés.
+- **POST /managers** : Ajoute un nouveau manager.
+- **GET /managers/{id}** : Trouve un manager par son ID.
 - **PUT /managers/{id}** : Met à jour un manager.
 - **DELETE /managers/{id}** : Supprime un manager.
+- **POST /managers** : Ajoute un nouveau manager.
 
 ### Formations
 
