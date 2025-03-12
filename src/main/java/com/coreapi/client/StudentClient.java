@@ -23,7 +23,8 @@ public interface StudentClient {
     @PutMapping(path = "/students/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    StudentDTO updateStudent(@PathVariable("id") String id, StudentDTO studentDTO);
+    StudentDTO updateStudent(@PathVariable("id") String id, @RequestBody StudentDTO studentDTO);
+
 
     @DeleteMapping("/students/{id}")
     void deleteStudent(@PathVariable("id") String id);

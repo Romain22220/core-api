@@ -230,154 +230,153 @@ paths:
           description: Formation supprimée avec succès
         '404':
           description: Formation non trouvée
-    /register:
-      post:
-        summary: Inscription d'un utilisateur
-        description: Permet à un nouvel utilisateur de s'inscrire.
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserRegister'
-        responses:
-          '201':
-            description: Utilisateur créé avec succès
-          '400':
-            description: Requête invalide (email déjà utilisé, données invalides)
+  /register:
+    post:
+      summary: Inscription d'un utilisateur
+      description: Permet à un nouvel utilisateur de s'inscrire.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+      responses:
+        '201':
+          description: Utilisateur créé avec succès
+        '400':
+          description: Requête invalide (email déjà utilisé, données invalides)
 
-    /login:
-      post:
-        summary: Connexion d'un utilisateur
-        description: Permet à un utilisateur de se connecter et d'obtenir un token JWT.
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserLogin'
-        responses:
-          '200':
-            description: Connexion réussie, retourne un token JWT
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    access_token:
-                      type: string
-                      description: Token JWT à utiliser pour l'authentification
-                    refresh_token:
-                      type: string
-                      description: Token JWT permettant d'obtenir un nouveau token d'accès
-          '401':
-            description: Identifiants incorrects
-
-    /logout:
-      post:
-        summary: Déconnexion de l'utilisateur
-        description: Invalide le token de l'utilisateur et le déconnecte.
-        security:
-          - bearerAuth: [ ]
-        responses:
-          '200':
-            description: Déconnexion réussie
-          '401':
-            description: Non authentifié
-
-    /token:
-      post:
-        summary: Rafraîchir le token JWT
-        description: Génère un nouveau token d'accès à partir d'un refresh token valide.
-        requestBody:
-          required: true
+  /login:
+    post:
+      summary: Connexion d'un utilisateur
+      description: Permet à un utilisateur de se connecter et d'obtenir un token JWT.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+      responses:
+        '200':
+          description: Connexion réussie, retourne un token JWT
           content:
             application/json:
               schema:
                 type: object
                 properties:
+                  access_token:
+                    type: string
+                    description: Token JWT à utiliser pour l'authentification
                   refresh_token:
                     type: string
-                    description: Refresh token valide
-        responses:
-          '200':
-            description: Nouveau token généré
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    access_token:
-                      type: string
-                      description: Nouveau token JWT d'accès
-          '401':
-            description: Refresh token invalide ou expiré
+                    description: Token JWT permettant d'obtenir un nouveau token d'accès
+        '401':
+          description: Identifiants incorrects
 
-    /users/{id}:
-      get:
-        summary: Récupérer les informations de l'utilisateur connecté
-        description: Renvoie les informations du profil de l'utilisateur authentifié.
-        security:
-          - bearerAuth: [ ]
-        responses:
-          '200':
-            description: Informations de l'utilisateur
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/User'
-          '401':
-            description: Non authentifié
+  /logout:
+    post:
+      summary: Déconnexion de l'utilisateur
+      description: Invalide le token de l'utilisateur et le déconnecte.
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: Déconnexion réussie
+        '401':
+          description: Non authentifié
 
-    /account/{id}:
-      put:
-        summary: Met à jour un compte utilisateur
-        description: Modifie les informations d'un utilisateur.
-        security:
-          - bearerAuth: [ ]
-        parameters:
-          - name: id
-            in: path
-            required: true
-            description: Identifiant unique de l'utilisateur.
+  /token:
+    post:
+      summary: Rafraîchir le token JWT
+      description: Génère un nouveau token d'accès à partir d'un refresh token valide.
+      requestBody:
+        required: true
+        content:
+          application/json:
             schema:
-              type: string
-        requestBody:
-          required: true
+              type: object
+              properties:
+                refresh_token:
+                  type: string
+                  description: Refresh token valide
+      responses:
+        '200':
+          description: Nouveau token généré
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserUpdate'
-        responses:
-          '200':
-            description: Compte mis à jour avec succès
-          '400':
-            description: Données invalides
-          '401':
-            description: Non authentifié
-          '404':
-            description: Utilisateur non trouvé
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: Nouveau token JWT d'accès
+        '401':
+          description: Refresh token invalide ou expiré
 
-      delete:
-        summary: Supprime un compte utilisateur
-        description: Supprime définitivement un compte utilisateur.
-        security:
-          - bearerAuth: [ ]
-        parameters:
-          - name: id
-            in: path
-            required: true
-            description: Identifiant unique de l'utilisateur.
+  /users/{id}:
+    get:
+      summary: Récupérer les informations de l'utilisateur connecté
+      description: Renvoie les informations du profil de l'utilisateur authentifié.
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: Informations de l'utilisateur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Non authentifié
+
+  /account/{id}:
+    put:
+      summary: Met à jour un compte utilisateur
+      description: Modifie les informations d'un utilisateur.
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identifiant unique de l'utilisateur.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
             schema:
-              type: string
-        responses:
-          '200':
-            description: Compte supprimé avec succès
-          '401':
-            description: Non authentifié
-          '404':
-            description: Utilisateur non trouvé
+              $ref: '#/components/schemas/UserUpdate'
+      responses:
+        '200':
+          description: Compte mis à jour avec succès
+        '400':
+          description: Données invalides
+        '401':
+          description: Non authentifié
+        '404':
+          description: Utilisateur non trouvé
 
+    delete:
+      summary: Supprime un compte utilisateur
+      description: Supprime définitivement un compte utilisateur.
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identifiant unique de l'utilisateur.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Compte supprimé avec succès
+        '401':
+          description: Non authentifié
+        '404':
+          description: Utilisateur non trouvé
 
   /messages:
     post:
@@ -409,132 +408,134 @@ paths:
         '500':
           description: Erreur interne du serveur
 
-  /messages/{id}:
-    get:
-      tags:
-        - Messages
-      summary: Récupère un message spécifique
-      description: Récupère les détails d'un message par son ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-          description: ID du message à récupérer
-      responses:
-        '200':
-          description: Opération réussie
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Message'
-        '401':
-          description: Non autorisé
-        '403':
-          description: Accès interdit
-        '404':
-          description: Message non trouvé
-        '500':
-          description: Erreur interne du serveur
-
-    put:
-      tags:
-        - Messages
-      summary: Met à jour un message
-      description: Met à jour les informations d'un message existant (notamment son statut de lecture)
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-          description: ID du message à mettre à jour
-      requestBody:
-        required: true
-        content:
-          application/json:
+    /messages/{id}:
+      get:
+        tags:
+          - Messages
+        summary: Récupère un message spécifique
+        description: Récupère les détails d'un message par son ID
+        parameters:
+          - name: id
+            in: path
+            required: true
             schema:
-              $ref: '#/components/schemas/MessageUpdateRequest'
-      responses:
-        '200':
-          description: Message mis à jour avec succès
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Message'
-        '400':
-          description: Requête invalide
-        '401':
-          description: Non autorisé
-        '403':
-          description: Accès interdit
-        '404':
-          description: Message non trouvé
-        '500':
-          description: Erreur interne du serveur
-
-    delete:
-      tags:
-        - Messages
-      summary: Supprime un message
-      description: Supprime un message spécifique
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-          description: ID du message à supprimer
-      responses:
-        '204':
-          description: Message supprimé avec succès
-        '401':
-          description: Non autorisé
-        '403':
-          description: Accès interdit
-        '404':
-          description: Message non trouvé
-        '500':
-          description: Erreur interne du serveur
-
-  /messages/etudiants/{id}:
-    get:
-      tags:
-        - Messages
-      summary: Récupère tous les messages d'un étudiant
-      description: Récupère la liste de tous les messages associés à un étudiant spécifique
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numéro de l'étudiant dont on veut récupérer les messages
-        - name: lu
-          in: query
-          required: false
-          schema:
-            type: boolean
-          description: Filtrer les messages par statut de lecture (true = lu, false = non lu)
-      responses:
-        '200':
-          description: Opération réussie
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
+              type: string
+            description: ID du message à récupérer
+        responses:
+          '200':
+            description: Opération réussie
+            content:
+              application/json:
+                schema:
                   $ref: '#/components/schemas/Message'
-        '401':
-          description: Non autorisé
-        '403':
-          description: Accès interdit
-        '404':
-          description: Étudiant non trouvé
-        '500':
-          description: Erreur interne du serveur
+          '401':
+            description: Non autorisé
+          '403':
+            description: Accès interdit
+          '404':
+            description: Message non trouvé
+          '500':
+            description: Erreur interne du serveur
+
+      put:
+        tags:
+          - Messages
+        summary: Met à jour un message
+        description: Met à jour les informations d'un message existant (notamment son statut de lecture)
+        parameters:
+          - name: id
+            in: path
+            required: true
+            schema:
+              type: string
+            description: ID du message à mettre à jour
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageUpdateRequest'
+        responses:
+          '200':
+            description: Message mis à jour avec succès
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Message'
+          '400':
+            description: Requête invalide
+          '401':
+            description: Non autorisé
+          '403':
+            description: Accès interdit
+          '404':
+            description: Message non trouvé
+          '500':
+            description: Erreur interne du serveur
+
+      delete:
+        tags:
+          - Messages
+        summary: Supprime un message
+        description: Supprime un message spécifique
+        parameters:
+          - name: id
+            in: path
+            required: true
+            schema:
+              type: string
+            description: ID du message à supprimer
+        responses:
+          '204':
+            description: Message supprimé avec succès
+          '401':
+            description: Non autorisé
+          '403':
+            description: Accès interdit
+          '404':
+            description: Message non trouvé
+          '500':
+            description: Erreur interne du serveur
+
+    /messages/students/{id}:
+      get:
+        tags:
+          - Messages
+        summary: Récupère tous les messages d'un étudiant
+        description: Récupère la liste de tous les messages associés à un étudiant spécifique
+        parameters:
+          - name: id
+            in: path
+            required: true
+            schema:
+              type: integer
+              format: int64
+            description: Numéro de l'étudiant dont on veut récupérer les messages
+          - name: lu
+            in: query
+            required: false
+            schema:
+              type: boolean
+            description: Filtrer les messages par statut de lecture (true = lu, false = non lu)
+        responses:
+          '200':
+            description: Opération réussie
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Message'
+          '401':
+            description: Non autorisé
+          '403':
+            description: Accès interdit
+          '404':
+            description: Étudiant non trouvé
+          '500':
+            description: Erreur interne du serveur
+
+
 
 components:
   securitySchemes:
@@ -759,35 +760,35 @@ components:
         - lu
         - etudiantId
 
-    MessageCreationRequest:
-      type: object
-      properties:
-        texte:
-          type: string
-          description: Contenu du message
-        sujet:
-          type: string
-          description: Sujet du message
-        etudiantId:
-          type: integer
-          format: int64
-          description: Numéro de l'étudiant destinataire du message
-      required:
-        - texte
-        - etudiantId
+      MessageCreationRequest:
+        type: object
+        properties:
+          texte:
+            type: string
+            description: Contenu du message
+          sujet:
+            type: string
+            description: Sujet du message
+          etudiantId:
+            type: integer
+            format: int64
+            description: Numéro de l'étudiant destinataire du message
+        required:
+          - texte
+          - etudiantId
 
-    MessageUpdateRequest:
-      type: object
-      properties:
-        texte:
-          type: string
-          description: Contenu du message
-        lu:
-          type: boolean
-          description: Statut de lecture du message
-        sujet:
-          type: string
-          description: Sujet du message
+      MessageUpdateRequest:
+        type: object
+        properties:
+          texte:
+            type: string
+            description: Contenu du message
+          lu:
+            type: boolean
+            description: Statut de lecture du message
+          sujet:
+            type: string
+            description: Sujet du message
 
 security:
   - bearerAuth: [ ]
