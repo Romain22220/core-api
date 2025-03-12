@@ -1,0 +1,135 @@
+openapi: 3.1.0
+info:
+  title: API gestion des étudiants
+  description: cette api permet une gestion Crud sur les etudiants
+
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Serveur de devellopement
+tags:
+  - name: students
+    description: Opérations liées à la gestion des étudiants
+
+paths:
+  /students:
+    get:
+      summary: Liste de tout les etudiants
+      description: Renvoie une liste de tous les etudiant dans la bdd.
+      responses:
+        '200':
+          description: Une liste des etudiants
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Students'
+    post:
+      summary: Ajoute un nouveau étudiant
+      description: Ajoute un nouveau etudiant à la bdd.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Students'
+      responses:
+        '201':
+          description: Etudiants créé avec succès
+        '400':
+          description: Requête invalide
+
+       
+
+  /students/{id}:
+    get:
+      summary: Trouver un etudiant par son id
+      description: Renvoie un etudiant spécifique identifié par son id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: L'id de l'étudiant à trouver.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Détails d'un étudiants
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Students'
+        '404':
+          description: Livre non trouvé
+          
+    put:
+      summary: Met à jour un etudiant
+      description: Met à jour les informations d'un étudiant spécifique.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: L'id de l'etudiant à mettre à jour.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Students'
+      responses:
+        '200':
+          description: Etudiant mis à jour avec succès
+        '404':
+          description: Etudiant non trouvé
+        '400':
+          description: Requête invalide
+    delete:
+      summary: Supprime un etudiant
+      description: Supprime un etudiant spécifique de la bdd.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: L'id de l'étudiant à supprimer.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Etudiants supprimé avec succès
+        '404':
+          description: Etudiants non trouvé
+
+    
+
+components:
+  schemas:
+    Students:
+      type: object
+      required:
+        - id
+        - titre
+      properties:
+        id:
+          type: integer
+          description: L'id de l'étudiant
+        nom:
+          type: string
+          description: Nom etudiant
+        prenom:
+          type: string
+          description: Prenom de l'etudiant.
+        date_naissance:
+          type: number
+          format: date
+          description: date de naissance de l'etudiant.
+        numero:
+          type: integer
+          description: Numero de l'etudiant.
+        adresse_mail:
+          type: string
+          description: Le mail de l'etudiant.
+        
