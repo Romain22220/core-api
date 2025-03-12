@@ -53,6 +53,10 @@ La Core API est une API centrale qui route les requêtes vers les autres APIs. E
 
 L'API utilise des tokens JWT pour authentifier les requêtes. Utilisez le token JWT pour authentifier les requêtes en ajoutant un header `Authorization` avec la valeur `Bearer <token>`.
 
+## Tests
+
+Des tests ont été effectués pour les services `students` et `managers`. 
+
 ## Documentation
 
 Pour plus de détails sur les endpoints et les schémas de données, veuillez consulter la documentation OpenAPI disponible dans le fichier `core-api.yaml`.
