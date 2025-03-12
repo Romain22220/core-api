@@ -7,6 +7,9 @@ import com.coreapi.dto.TokenResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
+/*
+ * L'interface AuthentificationClient permet de communiquer avec le service Auth
+ */
 @FeignClient(name = "auth-api", url = "http://localhost:8080/api/auth")
 public interface AuthentificationClient {
         @PostMapping("/register")

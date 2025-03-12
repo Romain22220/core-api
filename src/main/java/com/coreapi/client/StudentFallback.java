@@ -4,6 +4,10 @@ import com.coreapi.dto.StudentDTO;
 
 import java.util.List;
 
+/**
+ * Fallback class for StudentClient
+ * Cette classe est utilisée pour gérer les erreurs de communication avec le service Student
+ */
 public class StudentFallback implements StudentClient{
     @Override
     public List<StudentDTO> getAllStudents() {

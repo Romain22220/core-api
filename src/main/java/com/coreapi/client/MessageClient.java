@@ -7,7 +7,9 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+/*
+* Interface pour la communication avec le service Message
+ */
 @FeignClient(name = "message-api", url = "http://localhost:8080/api/messages")
 public interface MessageClient {
 

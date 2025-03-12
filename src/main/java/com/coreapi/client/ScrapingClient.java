@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+/**
+ * Interface pour la communication avec le service de scraping
+ */
 @FeignClient(name = "scraping-api", url = "http://localhost:8080/api/scrapper")
 public interface ScrapingClient {
 

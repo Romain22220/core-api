@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/*
+ * L'interface FormationClient permet de communiquer avec le service Formation
+ */
 @FeignClient(name = "formation-api", url = "http://localhost:8080/formations")
 public interface FormationClient {
 

@@ -15,15 +15,10 @@ public class CoreController {
 
     private final ScrapingClient scrapingClient;
 
+    // 📌 Tester le bon fonctionnement de l'API
     @GetMapping("/test")
     public String testEndpoint() {
         return "API is running!";
-    }
-
-    // 📌 Scraper les formations pour une année donnée
-    @GetMapping("/scrapper")
-    public ResponseEntity<List<ScrapedFormationDTO>> scrapeFormations(@RequestParam("year") String year) {
-        return ResponseEntity.ok(scrapingClient.scrapeFormations(year));
     }
 
 }

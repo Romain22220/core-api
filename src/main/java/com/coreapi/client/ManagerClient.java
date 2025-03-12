@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/*
+ * L'interface ManagerClient permet de communiquer avec le service Manager
+ */
 @FeignClient(name = "manager-api", url = "http://localhost:8100")
 public interface ManagerClient {
 

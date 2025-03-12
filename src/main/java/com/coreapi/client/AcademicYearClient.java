@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/*
+ * Interface pour la communication avec le service AcademicYear
+ */
 @FeignClient(name = "academic-year-api", url = "http://localhost:8080/academic-year")
 public interface AcademicYearClient {
 

@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Interface pour la communication avec le service Student
+ */
+
 @FeignClient(name = "apiStudent", url = "http://localhost:8300", fallback = StudentFallback.class)
 public interface StudentClient {
 
