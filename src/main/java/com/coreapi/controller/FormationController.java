@@ -15,32 +15,38 @@ public class FormationController {
 
     private final FormationClient formationClient;
 
+    // ✅ Récupérer toutes les formations
     @GetMapping
     public ResponseEntity<List<FormationDTO>> getAllFormations() {
         return ResponseEntity.ok(formationClient.getAllFormations());
     }
 
+    // ✅ Récupérer une formation par son id
     @GetMapping("/{id}")
     public ResponseEntity<FormationDTO> getFormationById(@PathVariable String id) {
         return ResponseEntity.ok(formationClient.getFormationById(id));
     }
 
+    // ✅ Créer une formation
     @PostMapping
     public ResponseEntity<FormationDTO> createFormation(@RequestBody FormationDTO formationDTO) {
         return ResponseEntity.ok(formationClient.createFormation(formationDTO));
     }
 
+    // ✅ Mettre à jour une formation
     @PutMapping("/{id}")
     public ResponseEntity<FormationDTO> updateFormation(@PathVariable String id, @RequestBody FormationDTO formationDTO) {
         return ResponseEntity.ok(formationClient.updateFormation(id, formationDTO));
     }
 
+    // ✅ Supprimer une formation
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFormation(@PathVariable String id) {
         formationClient.deleteFormation(id);
         return ResponseEntity.noContent().build();
     }
 
+    // ✅ inscrire un étudiant à une formation
     @PostMapping("/{id}/inscription")
     public ResponseEntity<Void> inscrireEtudiant(@PathVariable String id, @RequestBody InscriptionFormationDTO inscription) {
         formationClient.inscrireEtudiant(id, inscription);
